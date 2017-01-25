@@ -184,6 +184,19 @@ class ProductQueryBuilder implements ProductQueryBuilderInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function count()
+    {
+        $result = $this->getQueryBuilder()
+            ->select('COUNT(DISTINCT o.id)')
+            ->getQuery()
+            ->execute();
+
+        return empty($result) || !isset($result[0][1]) ? 0 : $result[0][1];
+    }
+
+    /**
      * Add a filter condition on a field
      *
      * @param FieldFilterInterface $filter   the filter
